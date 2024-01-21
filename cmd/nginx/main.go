@@ -18,6 +18,7 @@ package main
 
 import (
 	"context"
+	"flag"
 	"fmt"
 	"net/http"
 	"os"
@@ -51,7 +52,11 @@ import (
 )
 
 func main() {
-	klog.InitFlags(nil)
+	klogFlags := flag.NewFlagSet("ingress-nginx", flag.ExitOnError)
+	klog.InitFlags(klogFlags)
+	klogFlags.Set("logtostderr", "false")
+	klogFlags.Set("skip_headers", "true")
+	klogFlags.Set("logging-format", "json")
 
 	fmt.Println(version.String())
 
